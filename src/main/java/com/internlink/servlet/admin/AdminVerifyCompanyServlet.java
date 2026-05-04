@@ -6,10 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 
-/**
- * AdminVerifyCompanyServlet - Admin verifies or revokes a company.
- * URL: /admin/verifyCompany  (POST)
- */
 @WebServlet("/admin/verifyCompany")
 public class AdminVerifyCompanyServlet extends HttpServlet {
 
