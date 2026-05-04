@@ -1,8 +1,5 @@
-/* ================================================================
-   InternLink Nepal — Main JavaScript
-   ================================================================ */
 
-/* ── Carousel ─────────────────────────────────────────────────── */
+/* Carousel  */
 (function initCarousel() {
   const track = document.querySelector('.carousel-track');
   if (!track) return;
@@ -29,7 +26,7 @@
   resetTimer();
 })();
 
-/* ── Navbar scroll shadow ─────────────────────────────────────── */
+/* Navbar scroll shadow  */
 (function navbarScroll() {
   const nav = document.querySelector('.navbar');
   if (!nav) return;
@@ -38,7 +35,7 @@
   });
 })();
 
-/* ── Alert auto-dismiss ───────────────────────────────────────── */
+/* Alert auto-dismiss  */
 (function alertDismiss() {
   document.querySelectorAll('.alert[data-auto-dismiss]').forEach(el => {
     setTimeout(() => {
@@ -49,14 +46,14 @@
   });
 })();
 
-/* ── Filter form auto-submit ──────────────────────────────────── */
+/* Filter form auto-submit  */
 (function autoSubmitFilters() {
   document.querySelectorAll('select[data-auto-submit]').forEach(sel => {
     sel.addEventListener('change', () => sel.closest('form').submit());
   });
 })();
 
-/* ── Donut Chart (pure canvas) ───────────────────────────────── */
+/*  Donut Chart (pure canvas)  */
 function drawDonut(canvasId, data) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
@@ -98,7 +95,7 @@ function drawDonut(canvasId, data) {
   ctx.fillText('total', cx, cy + 14);
 }
 
-/* ── Bar Chart (pure canvas) ─────────────────────────────────── */
+// Bar Chart (pure canvas)
 function drawBar(canvasId, labels, values, color) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
@@ -149,7 +146,7 @@ function drawBar(canvasId, labels, values, color) {
   });
 }
 
-/* ── Modal helpers ───────────────────────────────────────────── */
+// Modal helpers
 function openModal(id) {
   const m = document.getElementById(id);
   if (m) { m.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
@@ -165,7 +162,7 @@ document.querySelectorAll('.modal').forEach(m => {
   m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
 });
 
-/* ── Google Maps integration helpers ────────────────────────── */
+// Google Maps integration helpers
 function initCompanyMap(lat, lng, companyName) {
   if (!window.google || !lat || !lng) return;
   const pos = { lat: parseFloat(lat), lng: parseFloat(lng) };
@@ -193,7 +190,7 @@ function initCompanyMap(lat, lng, companyName) {
   });
 }
 
-/* ── Geocode address to lat/lng (uses Nominatim free API) ───── */
+//Geocode address to lat/lng (uses Nominatim free API)
 async function geocodeAddress(address) {
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1`;
   try {
@@ -206,7 +203,7 @@ async function geocodeAddress(address) {
   return null;
 }
 
-/* ── Auto-geocode on company register form ───────────────────── */
+//Auto-geocode on company register form
 (function setupGeocodeBtn() {
   const btn = document.getElementById('geocodeBtn');
   if (!btn) return;
@@ -226,7 +223,7 @@ async function geocodeAddress(address) {
   });
 })();
 
-/* ── Profile completeness meter ──────────────────────────────── */
+// Profile completeness meter
 (function profileMeter() {
   const bar = document.querySelector('.profile-completeness-bar');
   if (!bar) return;
