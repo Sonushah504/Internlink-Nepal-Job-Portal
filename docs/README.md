@@ -98,4 +98,3 @@ InternLinkNepal/
     │       └── profile.jsp
     └── WEB-INF/
         └── web.xml
-r students.*
