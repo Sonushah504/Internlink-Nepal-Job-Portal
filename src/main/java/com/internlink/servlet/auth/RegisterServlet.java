@@ -12,10 +12,7 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
-/**
- * RegisterServlet - Handles new user registration for both STUDENT and COMPANY roles.
- * URL: /register
- */
+
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 

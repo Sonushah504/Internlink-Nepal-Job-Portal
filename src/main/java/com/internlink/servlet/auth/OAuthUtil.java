@@ -6,9 +6,6 @@ final class OAuthUtil {
 
     private OAuthUtil() {}
 
-    /**
-     * Absolute redirect URI registered with Google/Facebook. Uses {@code X-Forwarded-*} when behind a reverse proxy.
-     */
     static String callbackUrl(HttpServletRequest req, String pathFromContext) {
         String scheme = firstNonBlank(req.getHeader("X-Forwarded-Proto"), req.getScheme());
         String hostPort = firstNonBlank(req.getHeader("X-Forwarded-Host"), null);
