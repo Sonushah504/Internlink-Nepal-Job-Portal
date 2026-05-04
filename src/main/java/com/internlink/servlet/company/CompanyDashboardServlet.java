@@ -16,10 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-/**
- * CompanyDashboardServlet - Loads data for the company dashboard.
- * URL: /company/dashboard
- */
+
 @WebServlet("/company/dashboard")
 public class CompanyDashboardServlet extends HttpServlet {
 

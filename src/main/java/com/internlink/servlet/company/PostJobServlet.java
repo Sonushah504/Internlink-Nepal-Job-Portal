@@ -12,10 +12,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.time.LocalDate;
 
-/**
- * PostJobServlet - GET shows the form, POST saves a new job posting.
- * URL: /company/postJob
- */
+
 @WebServlet("/company/postJob")
 public class PostJobServlet extends HttpServlet {
 

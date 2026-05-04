@@ -6,10 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 
-/**
- * UpdateStatusServlet - Company updates an application status.
- * URL: /company/updateStatus  (POST)
- */
+
 @WebServlet("/company/updateStatus")
 public class UpdateStatusServlet extends HttpServlet {
 
