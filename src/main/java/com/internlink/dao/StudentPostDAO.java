@@ -77,6 +77,75 @@ public class StudentPostDAO {
         }
     }
 
+    public void delete(String postId) throws SQLException {
+        StudentPost post = findById(postId);
+        if (post != null && post.getMediaPath() != null) {
+            try {
+                Path mediaFile = StorageUtil.resolveUpload(post.getMediaPath());
+                Files.deleteIfExists(mediaFile);
+            } catch (IOException e) {
+                // Log or ignore, but continue deletion
+            }
+        }
+
+        if (!hasUserPostsTable()) {
+            deleteFromFile(postId);
+            return;
+        }
+        String sql = "DELETE FROM user_posts WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, Long.parseLong(postId));
+            ps.executeUpdate();
+        }
+    }
+
+    public StudentPost findById(String postId) throws SQLException {
+        if (!hasUserPostsTable()) {
+            return findByIdFromFile(postId);
+        }
+
+        String sql = """
+            SELECT up.id, up.user_id, up.file_type, up.file_path, up.caption, up.created_at,
+                   sp.id AS student_id, sp.full_name, sp.program, sp.university,
+                   %s AS student_profile_photo
+            FROM user_posts up
+            JOIN users u ON u.id = up.user_id
+            JOIN student_profiles sp ON sp.user_id = up.user_id
+            WHERE up.id = ?
+            """.formatted(resolvedProfilePhotoSql());
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, Long.parseLong(postId));
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            }
+        }
+        return null;
+    }
+
+    private StudentPost findByIdFromFile(String postId) throws SQLException {
+        List<StudentPost> posts = findAllFromFile();
+        return posts.stream().filter(p -> postId.equals(p.getId())).findFirst().orElse(null);
+    }
+
+    private void deleteFromFile(String postId) throws SQLException {
+        try {
+            List<StudentPost> posts = findAllFromFile();
+            posts.removeIf(p -> postId.equals(p.getId()));
+
+            Path file = StorageUtil.dataFile(POSTS_FILE);
+            try (Writer writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
+                gson.toJson(posts, POSTS_TYPE, writer);
+            }
+        } catch (IOException e) {
+            throw new SQLException("Unable to delete student post from local storage", e);
+        }
+    }
+
     private StudentPost mapRow(ResultSet rs) throws SQLException {
         StudentPost post = new StudentPost();
         post.setId(String.valueOf(rs.getLong("id")));

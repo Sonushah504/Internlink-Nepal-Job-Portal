@@ -35,7 +35,7 @@
   </div>
   <div class="footer-bottom">
     <p>&copy; 2026 InternLink Nepal. All rights reserved.</p>
-    <p>Build by Team Interlink</p>
+    <p>Build by Sonu Shah</p>
   </div>
 </footer>
 

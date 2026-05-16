@@ -294,9 +294,39 @@
         <input data-profile-field data-score-key="linkedinUrl" name="linkedinUrl" value="${profile.linkedinUrl}" placeholder="LinkedIn URL (optional)" class="profile-field ${not empty profile.linkedinUrl ? 'filled' : ''}" style="grid-column:1/-1;"/>
 
         <div class="form-section-label" style="grid-column:1/-1;">Professional Identity</div>
-        <textarea data-profile-field data-score-key="skills" required name="skills" placeholder="Skills, comma separated (e.g. Java, React, SQL)" class="profile-field ${not empty profile.skills ? 'filled' : ''}" style="min-height:100px;grid-column:1/-1;resize:vertical;">${profile.skills}</textarea>
-        <textarea data-profile-field data-score-key="bio" required name="bio" placeholder="Short bio — tell companies who you are, what you're passionate about" class="profile-field ${not empty profile.bio ? 'filled' : ''}" style="min-height:120px;grid-column:1/-1;resize:vertical;">${profile.bio}</textarea>
-      </div>
+         <textarea data-profile-field data-score-key="skills" required name="skills" placeholder="Skills, comma separated (e.g. Java, React, SQL)" class="profile-field ${not empty profile.skills ? 'filled' : ''}" style="min-height:100px;grid-column:1/-1;resize:vertical;">${profile.skills}</textarea>
+         <textarea data-profile-field data-score-key="bio" required name="bio" placeholder="Short bio — tell companies who you are, what you're passionate about" class="profile-field ${not empty profile.bio ? 'filled' : ''}" style="min-height:120px;grid-column:1/-1;resize:vertical;">${profile.bio}</textarea>
+         
+         <div class="form-section-label" style="grid-column:1/-1;margin-top:10px;">Resume / CV</div>
+         <div style="grid-column:1/-1;padding:16px;background:var(--gray-50);border:2px dashed var(--border);border-radius:12px;">
+           <input type="file" id="cvInput" name="cv" accept="application/pdf" style="display:none;"/>
+           <div style="display:flex;align-items:center;gap:12px;">
+             <div style="flex:1;">
+               <div style="font-size:13px;font-weight:600;margin-bottom:4px;color:var(--text-primary);">Upload Your CV / Resume</div>
+               <div style="font-size:12px;color:var(--text-secondary);">
+                 <c:choose>
+                   <c:when test="${not empty profile.cvPath}">CV uploaded ✓ Click to replace</c:when>
+                   <c:otherwise>Upload a PDF file (Max 10MB). Companies can view this when you apply.</c:otherwise>
+                 </c:choose>
+               </div>
+             </div>
+             <button type="button" id="cvUploadBtn" class="btn btn-outline btn-sm" onclick="document.getElementById('cvInput').click()">
+               <c:choose>
+                 <c:when test="${not empty profile.cvPath}"><i class="fa-solid fa-repeat"></i> Replace</c:when>
+                 <c:otherwise><i class="fa-solid fa-upload"></i> Upload</c:otherwise>
+               </c:choose>
+             </button>
+             <c:if test="${not empty profile.cvPath}">
+               <a href="${pageContext.request.contextPath}/${profile.cvPath}" class="btn btn-ghost btn-sm" target="_blank">
+                 <i class="fa-solid fa-download"></i> View
+               </a>
+             </c:if>
+           </div>
+           <div id="cvFileName" style="margin-top:8px;font-size:12px;color:var(--text-secondary);">
+             <c:if test="${not empty profile.cvPath}">Current: ${fn:substring(profile.cvPath, fn:length(profile.cvPath)-30, fn:length(profile.cvPath))}</c:if>
+           </div>
+         </div>
+       </div>
 
       <!-- Actions Bar -->
       <div class="profile-actions-bar">
@@ -347,6 +377,7 @@
   // Snapshot of initial state to detect changes
   const initialState = fields.map(f => f.value).join('||');
   let photoChanged = false;
+  let cvChanged = false;
   let editModeActive = !hasExistingProfile;
   window.studentProfileEditState = {
     enableEditMode: function() {
@@ -424,6 +455,36 @@
     });
   }
 
+   // CV upload handler
+   const cvInput = document.getElementById('cvInput');
+   const cvFileNameEl = document.getElementById('cvFileName');
+   const cvUploadBtn = document.getElementById('cvUploadBtn');
+   
+   if (cvInput) {
+     cvInput.addEventListener('change', function() {
+       if (this.files && this.files.length > 0) {
+         const file = this.files[0];
+         if (file.type === 'application/pdf') {
+           if (cvFileNameEl) {
+             cvFileNameEl.textContent = 'Selected: ' + file.name;
+             cvFileNameEl.style.color = 'var(--success)';
+           }
+           if (cvUploadBtn) {
+             cvUploadBtn.innerHTML = '<i class="fa-solid fa-check"></i> Selected';
+           }
+           cvChanged = true;
+           updateFormState();
+         } else {
+           alert('Please upload a PDF file only.');
+           this.value = '';
+           if (cvFileNameEl) {
+             cvFileNameEl.textContent = '';
+           }
+         }
+       }
+     });
+   }
+
   function getFieldScore(field) {
     const key = field.dataset.scoreKey;
     if (!key) return 0;
@@ -437,9 +498,9 @@
   }
 
   function hasChanged() {
-    const currentState = fields.map(f => f.value).join('||');
-    return currentState !== initialState || photoChanged;
-  }
+     const currentState = fields.map(f => f.value).join('||');
+     return currentState !== initialState || photoChanged || cvChanged;
+   }
 
   function allRequiredFilled() {
     return fields.every(f => !f.required || (f.value && f.value.trim()));

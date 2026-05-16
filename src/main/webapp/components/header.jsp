@@ -29,7 +29,10 @@
   if (_pathAfterCtx.isEmpty()) {
       _pathAfterCtx = "/";
   }
-  boolean _isHome = "/".equals(_pathAfterCtx) || "/index.jsp".equals(_pathAfterCtx);
+  boolean _isHome = "/".equals(_pathAfterCtx)
+      || "/index.jsp".equals(_pathAfterCtx)
+      || "/home".equals(_pathAfterCtx)
+      || "/pages/home.jsp".equals(_pathAfterCtx);
   boolean _showBack = !_isHome;
   boolean _dashboardPage = _uri.contains("/company/dashboard") || _uri.contains("/student/dashboard");
   int _unread = 0;

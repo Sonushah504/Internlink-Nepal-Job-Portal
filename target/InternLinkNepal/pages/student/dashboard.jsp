@@ -104,6 +104,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  position: relative;
 }
 .post-author-photo {
   width: 44px; height: 44px;
@@ -128,6 +129,40 @@
   font-size: 10px; font-weight: 700; padding: 2px 8px;
   border-radius: 10px; margin-left: 8px;
 }
+
+/* Post options button and menu */
+.post-options-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.post-options-btn:hover { background: var(--gray-100); color: var(--text-primary); }
+.post-options-menu {
+  position: absolute;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  padding: 8px 0;
+  min-width: 120px;
+  z-index: 10;
+}
+.post-options-menu button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+.post-options-menu button:hover { background: var(--gray-50); }
 </style>
 
 <div class="dash-layout">
@@ -173,6 +208,45 @@
     <div style="padding:20px;margin-top:auto;">
       <a href="${pageContext.request.contextPath}/logout" class="btn btn-ghost btn-sm btn-block">Sign Out</a>
     </div>
+
+    <!-- CV Quick Access -->
+    <div class="card">
+      <div class="card-body">
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:14px;">Resume / CV</h3>
+        <c:choose>
+          <c:when test="${not empty profile.cvPath}">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;background:var(--primary-light);border-radius:12px;margin-bottom:12px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <i class="fa-solid fa-file-pdf" style="font-size:20px;color:var(--primary);"></i>
+                <div>
+                  <div style="font-size:13px;font-weight:600;">CV Uploaded</div>
+                  <div style="font-size:11px;color:var(--text-secondary);">Ready for job applications</div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <a href="${pageContext.request.contextPath}/${profile.cvPath}" class="btn btn-primary btn-sm" style="flex:1;" target="_blank">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+              <a href="${pageContext.request.contextPath}/student/profile" class="btn btn-outline btn-sm" style="flex:1;">
+                <i class="fa-solid fa-pencil"></i> Replace
+              </a>
+            </div>
+          </c:when>
+          <c:otherwise>
+            <div style="text-align:center;padding:20px;background:var(--gray-50);border-radius:12px;margin-bottom:12px;">
+              <div style="font-size:28px;margin-bottom:8px;"><i class="fa-solid fa-file-pdf"></i></div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:4px;">No CV Yet</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Upload your resume to apply for jobs</div>
+            </div>
+            <a href="${pageContext.request.contextPath}/student/profile" class="btn btn-primary btn-sm btn-block">
+              <i class="fa-solid fa-upload"></i> Upload CV
+            </a>
+          </c:otherwise>
+        </c:choose>
+      </div>
+    </div>
+
   </aside>
 
   <!-- Main content -->
@@ -333,7 +407,7 @@
                           <span class="post-type-badge" style="background:var(--primary-light);color:var(--primary);"><i class="fa-solid fa-image"></i> Photo</span>
                         </c:when>
                         <c:when test="${post.mediaType == 'VIDEO'}">
-                          <span class="post-type-badge" style="background:var(--warning-light);color:var(--warning);"><i class="fa-solid fa-video"></i> Video</span>
+                          <span class="post-type-badge" style="background:var(--warning-light);color:var,--warning);"><i class="fa-solid fa-video"></i> Video</span>
                         </c:when>
                         <c:otherwise>
                           <span class="post-type-badge" style="background:var(--gray-100);color:var(--gray-600);"><i class="fa-solid fa-align-left"></i> Text</span>
@@ -345,6 +419,17 @@
                   <span class="post-time" title="${post.createdAt}">
                     <c:if test="${not empty post.createdAt}">${fn:substring(post.createdAt,0,10)}</c:if>
                   </span>
+                  <c:if test="${post.studentId == profile.id}">
+                    <button class="post-options-btn" onclick="togglePostOptions('${post.id}')">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </button>
+                    <div id="options-${post.id}" class="post-options-menu" style="display:none;">
+                      <form action="${pageContext.request.contextPath}/student/posts/delete" method="post" style="display:inline;">
+                        <input type="hidden" name="postId" value="${post.id}"/>
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                      </form>
+                    </div>
+                  </c:if>
                 </div>
 
                 <c:if test="${not empty post.content}">
@@ -397,7 +482,7 @@
                       </div>
                     </div>
                     <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-                      <span style="font-size:12px;color:var(--text-secondary);"><i class="fa-solid fa-location-dot"></i> ${job.companyCity}</span>
+                      <span style="font-size:12px;color:var,--text-secondary);"><i class="fa-solid fa-location-dot"></i> ${job.companyCity}</span>
                       <span class="badge badge-fresher" style="font-size:10px;">${job.jobType}</span>
                       <div style="margin-left:auto;">
                         <c:choose>
@@ -619,6 +704,23 @@ function dashProfileCancelEdit() {
   if (f) f.style.display = 'none';
   if (b) b.style.display = 'inline-flex';
 }
+
+function togglePostOptions(postId) {
+  var menu = document.getElementById('options-' + postId);
+  var isVisible = menu.style.display === 'block';
+  // Hide all menus first
+  document.querySelectorAll('.post-options-menu').forEach(m => m.style.display = 'none');
+  if (!isVisible) {
+    menu.style.display = 'block';
+  }
+}
+
+// Close menus when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.post-options-btn') && !e.target.closest('.post-options-menu')) {
+    document.querySelectorAll('.post-options-menu').forEach(m => m.style.display = 'none');
+  }
+});
 </script>
 
 <jsp:include page="/components/footer.jsp"/>

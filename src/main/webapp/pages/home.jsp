@@ -7,6 +7,14 @@
 <c:set var="pageTitle" value="InternLink Nepal – Find Internships & Jobs in Nepal"/>
 <jsp:include page="/components/header.jsp"/>
 
+<div class="page-preloader" aria-hidden="true">
+  <div class="preloader-mark">
+    <span class="preloader-diamond">&#9670;</span>
+    <span class="preloader-ring"></span>
+  </div>
+  <div class="preloader-text">InternLink Nepal</div>
+</div>
+
 <section class="hero">
   <div class="hero-container">
 
@@ -21,7 +29,7 @@
       </h1>
 
       <p>
-        A single, verified platform connecting bachelor students with trusted companies —
+        A single, verified platform connecting bachelor students with trusted companies -
         no more scattered Facebook groups or missed opportunities.
       </p>
     </div>

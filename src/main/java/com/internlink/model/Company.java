@@ -19,7 +19,7 @@ public class Company {
     private String        employeeCount;
     private int           foundedYear;
     private LocalDateTime createdAt;
-    private String        email; // joined from users table
+    private String        email;
 
     public Company() {}
 

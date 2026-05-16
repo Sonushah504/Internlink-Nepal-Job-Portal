@@ -204,16 +204,33 @@
       </div>
 
       <!-- Skills -->
-      <c:if test="${not empty profile.skills}">
-        <div class="pub-section">
-          <div class="pub-section-title">Skills</div>
-          <div class="pub-skills-grid">
-            <c:forTokens var="skill" items="${profile.skills}" delims=",">
-              <span class="pub-skill-tag">${fn:trim(skill)}</span>
-            </c:forTokens>
-          </div>
-        </div>
-      </c:if>
+       <c:if test="${not empty profile.skills}">
+         <div class="pub-section">
+           <div class="pub-section-title">Skills</div>
+           <div class="pub-skills-grid">
+             <c:forTokens var="skill" items="${profile.skills}" delims=",">
+               <span class="pub-skill-tag">${fn:trim(skill)}</span>
+             </c:forTokens>
+           </div>
+         </div>
+       </c:if>
+
+       <!-- CV / Resume -->
+       <c:if test="${not empty profile.cvPath}">
+         <div class="pub-section">
+           <div class="pub-section-title">Resume</div>
+           <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--gray-50);border-radius:12px;border:1px solid var(--border);">
+             <i class="fa-solid fa-file-pdf" style="font-size:24px;color:#D32F2F;flex-shrink:0;"></i>
+             <div style="flex:1;">
+               <div style="font-weight:600;font-size:13px;color:var(--text-primary);">Resume / CV</div>
+               <div style="font-size:11px;color:var(--text-secondary);">Available for download</div>
+             </div>
+             <a href="${pageContext.request.contextPath}/${profile.cvPath}" download class="btn btn-primary btn-sm" target="_blank">
+               <i class="fa-solid fa-download"></i> Download
+             </a>
+           </div>
+         </div>
+       </c:if>
 
       <!-- Application Activity -->
       <c:if test="${not empty applications}">

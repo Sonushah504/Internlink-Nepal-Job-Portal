@@ -7,7 +7,7 @@ public class Application {
     private int           studentId;
     private int           jobId;
     private String        coverLetter;
-    private String        status;  // PENDING | REVIEWING | SHORTLISTED | SELECTED | REJECTED
+    private String        status;
     private LocalDateTime appliedAt;
     private LocalDateTime updatedAt;
     private String        companyNotes;

@@ -11,8 +11,8 @@ public class JobPosting {
     private String        description;
     private String        requirements;
     private String        skillsRequired;
-    private String        jobType;          // INTERNSHIP | PART_TIME | FULL_TIME | REMOTE
-    private String        experienceRequired; // FRESHER | INTERN | EXPERIENCED | ANY
+    private String        jobType;
+    private String        experienceRequired;
     private double        minCgpa;
     private String        location;
     private String        salaryRange;

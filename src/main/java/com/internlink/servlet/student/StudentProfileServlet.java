@@ -20,7 +20,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 @WebServlet(name="/studentProfile",urlPatterns = "/student/profile")
-@MultipartConfig(maxFileSize = 5 * 1024 * 1024, maxRequestSize = 6 * 1024 * 1024)
+@MultipartConfig(maxFileSize = 10 * 1024 * 1024, maxRequestSize = 11 * 1024 * 1024)
 public class StudentProfileServlet extends HttpServlet {
 
     private final StudentProfileDAO profileDAO = new StudentProfileDAO();
@@ -107,6 +107,7 @@ public class StudentProfileServlet extends HttpServlet {
         profile.setExperienceType(req.getParameter("experienceType"));
         profile.setBio(req.getParameter("bio"));
         profile.setProfilePhoto(storeProfilePhoto(req, profile.getProfilePhoto()));
+        profile.setCvPath(storeCV(req, profile.getCvPath()));
         profile.setProfileScore(calculateProfileScore(profile));
         return profile;
     }
@@ -134,6 +135,34 @@ public class StudentProfileServlet extends HttpServlet {
         }
     }
 
+    private String storeCV(HttpServletRequest req, String currentPath) {
+        try {
+            Part cvFile = req.getPart("cv");
+            if (cvFile == null || cvFile.getSize() == 0) {
+                return currentPath;
+            }
+
+            // Only allow PDF files
+            String contentType = cvFile.getContentType();
+            if (contentType == null || !contentType.equals("application/pdf")) {
+                return currentPath;
+            }
+
+            String submitted = Path.of(cvFile.getSubmittedFileName()).getFileName().toString();
+            String extension = ".pdf";
+
+            String filename = "cv_" + System.currentTimeMillis() + extension;
+            Path target = com.internlink.util.StorageUtil.uploadsPath("student_cvs", filename);
+            Files.copy(cvFile.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
+            return com.internlink.util.StorageUtil.webPath("student_cvs", filename);
+        } catch (Exception e) {
+            // Log the exception for debugging
+            System.err.println("Error storing CV: " + e.getMessage());
+            e.printStackTrace();
+            return currentPath;
+        }
+    }
+
     private int calculateProfileScore(StudentProfile profile) {
         int score = 0;
         if (filled(profile.getFullName())) score += 15;
@@ -148,6 +177,7 @@ public class StudentProfileServlet extends HttpServlet {
         if (filled(profile.getLinkedinUrl())) score += 5;
         if (filled(profile.getExperienceType())) score += 5;
         if (filled(profile.getBio())) score += 10;
+        if (filled(profile.getCvPath())) score += 10;
         return Math.min(score, 100);
     }
 

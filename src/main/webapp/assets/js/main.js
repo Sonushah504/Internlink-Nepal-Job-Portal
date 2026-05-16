@@ -1,4 +1,24 @@
 
+/* Preloader */
+(function pagePreloader() {
+  const loader = document.querySelector('.page-preloader');
+  if (!loader) return;
+
+  document.body.classList.add('preload-active');
+
+  function hideLoader() {
+    loader.classList.add('is-hidden');
+    document.body.classList.remove('preload-active');
+    window.setTimeout(() => loader.remove(), 500);
+  }
+
+  if (document.readyState === 'complete') {
+    window.setTimeout(hideLoader, 650);
+  } else {
+    window.addEventListener('load', () => window.setTimeout(hideLoader, 650), { once: true });
+  }
+})();
+
 /* Carousel  */
 (function initCarousel() {
   const track = document.querySelector('.carousel-track');

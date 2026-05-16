@@ -12,9 +12,6 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
-/**
- * StudentDashboardServlet - URL: /student/dashboard
- */
 @WebServlet("/student/dashboard")
 public class StudentDashboardServlet extends HttpServlet {
 

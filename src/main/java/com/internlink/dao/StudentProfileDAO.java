@@ -114,7 +114,7 @@ public class StudentProfileDAO {
     }
 
     public void update(StudentProfile sp) throws SQLException {
-        String sql = "UPDATE student_profiles SET full_name=?, phone=?, address=?, university=?, program=?, semester=?, cgpa=?, skills=?, github_url=?, linkedin_url=?, experience_type=?, bio=?, profile_score=?, profile_photo=? WHERE id=?";
+        String sql = "UPDATE student_profiles SET full_name=?, phone=?, address=?, university=?, program=?, semester=?, cgpa=?, skills=?, github_url=?, linkedin_url=?, experience_type=?, bio=?, profile_score=?, profile_photo=?, cv_path=? WHERE id=?";
         try (Connection c = DBConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, sp.getFullName());
@@ -131,7 +131,8 @@ public class StudentProfileDAO {
             ps.setString(12, sp.getBio());
             ps.setInt(13,   sp.getProfileScore());
             ps.setString(14, sp.getProfilePhoto());
-            ps.setInt(15,   sp.getId());
+            ps.setString(15, sp.getCvPath());
+            ps.setInt(16,   sp.getId());
             ps.executeUpdate();
         }
     }
