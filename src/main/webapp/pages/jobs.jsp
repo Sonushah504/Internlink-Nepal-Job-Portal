@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <form action="${pageContext.request.contextPath}/jobs" method="get" class="card" style="padding:18px;display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:12px;margin-bottom:24px;">
+  <form action="${pageContext.request.contextPath}/jobs" method="get" class="card jobs-search-form" style="padding:18px;margin-bottom:24px;">
     <input type="text" name="q" value="${q}" placeholder="Search by title, skill, or company" style="padding:12px 14px;border:1px solid var(--border);border-radius:10px;"/>
     <select name="type" style="padding:12px 14px;border:1px solid var(--border);border-radius:10px;">
       <option value="">All types</option>
@@ -31,7 +31,7 @@
     <button class="btn btn-primary" type="submit">Search</button>
   </form>
 
-  <div style="display:grid;grid-template-columns:1.4fr .9fr;gap:24px;align-items:start;">
+  <div class="jobs-page-grid">
     <div class="grid-auto">
       <c:choose>
         <c:when test="${not empty jobs}">
@@ -78,7 +78,7 @@
       </c:choose>
     </div>
 
-    <div class="card">
+    <div class="card jobs-detail-panel">
       <div class="card-body">
         <h3 style="margin-bottom:12px;">Job Details</h3>
         <c:choose>

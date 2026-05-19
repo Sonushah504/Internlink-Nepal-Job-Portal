@@ -13,19 +13,19 @@
   background: linear-gradient(120deg, #0f2544 0%, #185FA5 55%, #2d7dd2 100%);
   border-radius: 20px 20px 0 0;
   position: relative;
+  z-index: 1;
 }
 .pub-avatar-wrap {
   position: absolute;
   bottom: -56px;
   left: 40px;
   transform: translateY(0);
+  z-index: 3;
 }
 .pub-avatar-img { border-radius: 50%; width:110px; height:110px; }
 .pub-avatar-img {
   width: 110px;
   height: 110px;
-  position: relative;
-  top: -300px;
   border-radius: 50%;
   object-fit: cover;
   border: 5px solid #fff;
@@ -43,6 +43,8 @@
   font-size: 40px; font-weight: 800; color: #fff;
 }
 .pub-profile-card {
+  position: relative;
+  z-index: 2;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 0 0 20px 20px;
@@ -106,10 +108,27 @@
 /* Application history */
 .app-row { padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
 .app-row:last-child { margin-bottom: 0; }
+
+@media (max-width: 768px) {
+  .pub-profile-wrap { padding: 20px 16px; }
+  .pub-cover { height: 140px; border-radius: 18px 18px 0 0; }
+  .pub-avatar-wrap { left: 20px; bottom: -44px; }
+  .pub-avatar-img,
+  .pub-avatar-fallback { width: 88px; height: 88px; }
+  .pub-profile-card { padding: 56px 18px 18px; }
+  .pub-profile-name { font-size: 22px; }
+  .pub-profile-title,
+  .pub-profile-location,
+  .pub-bio,
+  .pub-stat-value { overflow-wrap: anywhere; word-break: break-word; }
+  .pub-academic-grid { grid-template-columns: 1fr; }
+  .pub-section { padding: 18px; }
+  .app-row { flex-direction: column; align-items: flex-start; }
+}
 </style>
 
 <div class="pub-profile-wrap">
-  <div style="display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start;">
+  <div class="public-profile-grid">
 
     <!-- ── Main Column ──────────────────────────────────────────── -->
     <div>
@@ -251,7 +270,7 @@
     </div><!-- /main col -->
 
     <!-- ── Sidebar ────────────────────────────────────────────── -->
-    <aside style="display:grid;gap:16px;position:sticky;top:80px;">
+    <aside class="public-profile-sidebar">
 
       <!-- Contact Card -->
       <div class="pub-section" style="margin-bottom:0;">

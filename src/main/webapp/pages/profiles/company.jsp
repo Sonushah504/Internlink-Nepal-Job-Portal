@@ -14,6 +14,7 @@
   background: linear-gradient(120deg, #0d2645 0%, #16528d 55%, #2875c8 100%);
   border-radius: 20px 20px 0 0;
   position: relative;
+  z-index: 1;
 }
 .co-cover::before {
   content: '';
@@ -36,8 +37,11 @@
   border: 5px solid #fff;
   box-shadow: 0 4px 16px rgba(0,0,0,0.18);
   object-fit: cover;
+  z-index: 3;
 }
 .co-hero-card {
+  position: relative;
+  z-index: 2;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 0 0 20px 20px;
@@ -104,10 +108,40 @@
 .co-expect-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--gray-100); font-size: 13px; color: var(--text-secondary); }
 .co-expect-item:last-child { border-bottom: none; }
 .co-expect-icon { font-size: 16px; flex-shrink: 0; width: 22px; text-align: center; color: var(--primary); }
+
+@media (max-width: 768px) {
+  .co-profile-wrap { padding: 20px 16px; }
+  .co-cover { height: 150px; border-radius: 18px 18px 0 0; }
+  .co-logo-box {
+    width: 88px;
+    height: 88px;
+    left: 20px;
+    bottom: -44px;
+    top: auto;
+    border-radius: 20px;
+  }
+  .co-cover::before {
+    width: 88px;
+    height: 88px;
+    left: 20px;
+    bottom: -44px;
+    border-radius: 20px;
+  }
+  .co-hero-card { padding: 58px 18px 18px; }
+  .co-name { font-size: 22px; }
+  .co-meta,
+  .co-info-value { overflow-wrap: anywhere; word-break: break-word; }
+  .co-stats-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .co-stat-cell { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .co-stat-cell:nth-child(2n) { border-right: none; }
+  .co-stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+  .co-job-card { flex-direction: column; align-items: flex-start; }
+  .co-section { padding: 18px; }
+}
 </style>
 
 <div class="co-profile-wrap">
-  <div style="display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start;">
+  <div class="public-profile-grid">
 
     <!-- ── Main Column ──────────────────────────────────────────── -->
     <div>
@@ -233,7 +267,7 @@
     </div><!-- /main col -->
 
     <!-- ── Sidebar ───────────────────────────────────────────── -->
-    <aside style="display:grid;gap:16px;position:sticky;top:80px;">
+    <aside class="public-profile-sidebar">
 
       <!-- Contact Card -->
       <div class="co-section" style="margin-bottom:0;">
