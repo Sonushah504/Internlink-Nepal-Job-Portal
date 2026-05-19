@@ -120,7 +120,7 @@
           </div>
           <a href="${pageContext.request.contextPath}/profiles/company?id=${company.id}" class="btn btn-outline btn-sm">View Public Profile</a>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr) 1px repeat(4,1fr);gap:0;">
+        <div class="dashboard-breakdown-grid">
           <!-- Applicant types -->
           <div style="padding:20px 18px;text-align:center;border-right:1px solid var(--border);">
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--success);margin-bottom:6px;">Freshers</div>
@@ -174,7 +174,7 @@
     </div>
 
     <!-- ── Charts + Map row ──────────────────────────────────── -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+    <div class="dashboard-two-column" style="margin-bottom:20px;">
 
       <!-- Donut: Applicant types -->
       <div class="card">
@@ -225,14 +225,14 @@
       </div>
 
       <!-- Filter bar -->
-      <form action="${pageContext.request.contextPath}/company/dashboard" method="get" style="padding:14px 20px;border-bottom:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-        <select name="expFilter" class="form-control" style="width:auto;" data-auto-submit>
+      <form action="${pageContext.request.contextPath}/company/dashboard" method="get" class="dashboard-filter-form">
+        <select name="expFilter" class="form-control" data-auto-submit>
           <option value="">All Experience Levels</option>
           <option value="FRESHER"    ${filterExp == 'FRESHER'    ? 'selected' : ''}>Freshers Only</option>
           <option value="INTERN"     ${filterExp == 'INTERN'     ? 'selected' : ''}>Interns Only</option>
           <option value="EXPERIENCED" ${filterExp == 'EXPERIENCED' ? 'selected' : ''}>Experienced Only</option>
         </select>
-        <select name="statusFilter" class="form-control" style="width:auto;" data-auto-submit>
+        <select name="statusFilter" class="form-control" data-auto-submit>
           <option value="">All Statuses</option>
           <option value="PENDING"     ${filterStatus == 'PENDING'     ? 'selected' : ''}>Pending</option>
           <option value="REVIEWING"   ${filterStatus == 'REVIEWING'   ? 'selected' : ''}>Reviewing</option>
@@ -245,6 +245,7 @@
         </c:if>
       </form>
 
+      <div class="table-responsive">
       <table class="data-table">
         <thead>
           <tr>
@@ -321,6 +322,7 @@
           </c:choose>
         </tbody>
       </table>
+      </div>
     </div><!-- /table-card -->
 
   </main>

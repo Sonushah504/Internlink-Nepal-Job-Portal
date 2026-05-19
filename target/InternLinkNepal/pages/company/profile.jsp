@@ -171,7 +171,7 @@
           </c:if>
         </div>
       </div>
-      <div class="section-card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div class="section-card-body company-profile-fields">
         <div>
           <div class="field-label">Company Name *</div>
           <input name="companyName" id="inputCompanyName" value="${company.companyName}" placeholder="Company name" class="profile-input" required/>
