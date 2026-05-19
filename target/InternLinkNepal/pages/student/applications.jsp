@@ -18,6 +18,7 @@
       <h3>Application History</h3>
       <a href="${pageContext.request.contextPath}/student/dashboard" class="btn btn-ghost btn-sm">Back to Dashboard</a>
     </div>
+    <div class="table-responsive">
     <table class="data-table">
       <thead>
         <tr>
@@ -45,6 +46,7 @@
         </c:choose>
       </tbody>
     </table>
+    </div>
   </div>
 </section>
 

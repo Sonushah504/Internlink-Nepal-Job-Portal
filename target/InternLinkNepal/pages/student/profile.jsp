@@ -222,7 +222,7 @@
     <div class="alert alert-success" data-auto-dismiss style="margin-bottom:16px;">Profile saved successfully. Your profile score has been updated.</div>
   </c:if>
 
-  <div style="display:grid;grid-template-columns:minmax(0,1.65fr) 340px;gap:20px;align-items:start;">
+  <div class="student-profile-grid">
 
     <!-- Main form card -->
     <form id="studentProfileForm" action="${pageContext.request.contextPath}/student/profile" method="post" enctype="multipart/form-data" class="card" style="overflow:visible;" onsubmit="var fn=document.querySelector('#studentProfileForm [name=\'fullName\']'); if(fn&amp;&amp;fn.readOnly)return false; return true;">
@@ -273,7 +273,7 @@
       </div>
 
       <!-- Form Fields -->
-      <div class="profile-form-fields" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="profile-form-fields student-profile-fields">
         <div class="form-section-label" style="grid-column:1/-1;">Basic Info</div>
         <input data-profile-field data-score-key="fullName" required name="fullName" value="${profile.fullName}" placeholder="Full name" class="profile-field ${not empty profile.fullName ? 'filled' : ''}"/>
         <input data-profile-field data-score-key="phone" required name="phone" value="${profile.phone}" placeholder="Phone number" class="profile-field ${not empty profile.phone ? 'filled' : ''}"/>

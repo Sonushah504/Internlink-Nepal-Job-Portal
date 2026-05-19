@@ -306,7 +306,7 @@
     </div>
 
     <!-- ── Main Grid: Feed + Sidebar ──────────────────────────── -->
-    <div style="display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start;">
+    <div class="dashboard-main-grid">
 
       <!-- Left: Post + Feed -->
       <div>
@@ -356,6 +356,7 @@
             <h3>Recent Applications</h3>
             <a href="${pageContext.request.contextPath}/student/applications" class="btn btn-ghost btn-sm">View All</a>
           </div>
+          <div class="table-responsive">
           <table class="data-table">
             <thead>
               <tr>
@@ -385,6 +386,7 @@
               </c:choose>
             </tbody>
           </table>
+          </div>
         </div>
 
         <!-- Work Posts Feed -->
@@ -464,7 +466,7 @@
       </div><!-- /left col -->
 
       <!-- Right Sidebar -->
-      <div style="display:grid;gap:16px;">
+      <div class="dashboard-sidebar-stack">
 
         <!-- Recommended Jobs -->
         <div>
