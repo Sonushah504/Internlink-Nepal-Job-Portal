@@ -70,7 +70,7 @@
     </div>
 
     <!-- Student Breakdown + Company Verification row -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+    <div class="dashboard-two-column" style="margin-bottom:20px;">
 
       <!-- Student breakdown donut -->
       <div class="card">
@@ -123,6 +123,7 @@
         <h3>All Companies</h3>
         <span style="font-size:13px;color:var(--text-secondary);">${totalCompanies} registered</span>
       </div>
+      <div class="table-responsive">
       <table class="data-table">
         <thead>
           <tr>
@@ -180,6 +181,7 @@
           </c:if>
         </tbody>
       </table>
+      </div>
     </div>
 
     <!-- Jobs table -->
@@ -188,6 +190,7 @@
         <h3>Active Job Postings</h3>
         <span style="font-size:13px;color:var(--text-secondary);">${totalJobs} active</span>
       </div>
+      <div class="table-responsive">
       <table class="data-table">
         <thead>
           <tr>
@@ -215,6 +218,7 @@
           </c:if>
         </tbody>
       </table>
+      </div>
     </div>
 
   </main>

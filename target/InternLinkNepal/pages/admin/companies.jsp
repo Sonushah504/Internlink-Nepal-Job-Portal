@@ -13,6 +13,7 @@
   </div>
 
   <div class="table-card">
+    <div class="table-responsive">
     <table class="data-table">
       <thead>
         <tr>
@@ -41,6 +42,7 @@
         </c:forEach>
       </tbody>
     </table>
+    </div>
   </div>
 </section>
 
